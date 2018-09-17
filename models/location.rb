@@ -51,5 +51,9 @@ class Location
     return result
   end
 
+  def self.map_items(location_data)
+    result = location_data.map{|location| Location.new ( location)}
+    return result
+  end
 
 end

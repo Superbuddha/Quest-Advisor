@@ -27,10 +27,8 @@ class User
 
   def self.all()
     sql = "SELECT * FROM users"
-    values = []
-    users = SqlRunner.run(sql, values)
-    result = users.map { |user| User.new( user ) }
-    return result
+    user_data = SqlRunner.run(sql)
+    return User.map_items(user_data)
   end
 
   def self.delete_all()
@@ -48,6 +46,11 @@ class User
     values = [@id]
     locations = SqlRunner.run(sql, values)
     result = locations.map { |location| Location.new(location)}
+    return result
+  end
+
+  def self.map_items(user_data)
+    result = user_data.map {|user| User.new(user)}
     return result
   end
 

@@ -31,9 +31,8 @@ class Visit
 
   def self.all()
     sql = "SELECT * FROM visits"
-    visits = SqlRunner.run(sql)
-    result = visits.map { |visit| Visit.new( visit ) }
-    return result
+    visit_data = SqlRunner.run(sql)
+    return visits.map_items (visit_data)
   end
 
   def self.delete_all()
@@ -47,11 +46,16 @@ class Visit
     location = SqlRunner.run(sql, values).first
     return Location.new(location)
   end
-  
+
   def user()
     sql = "SELECT * FROM users WHERE id = $1"
     values [user_id]
     user = SqlRunner. run(sql, values).first
     return User.new(user)
+  end
+
+  def self.map_items(visit_data)
+    result = visit_data.map {|visit| Visit.new ( visit )}
+    return result
   end
 end
